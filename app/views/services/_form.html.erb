@@ -1,0 +1,26 @@
+<%= form_with(model: service, local: true) do |form| %>
+ <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fee %>
+    <%= form.number_field :fee %>
+  </div>
+  <div class="field">
+    <%= form.label :time %>
+    <%= form.datetime_local_field :time%>
+    
+  </div>
+  <%= form.collection_check_boxes :admin_user_ids, AdminUser.all, :id, :name, { hide_label: true } %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
