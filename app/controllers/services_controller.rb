@@ -13,14 +13,14 @@ class ServicesController < ApplicationController
     @service = current_admin_user.services.build(service_params)
     respond_to do |format|
       if @service.save
+        current_admin_user.seller_services.create(service_id: @service.id)
         format.html { redirect_to service_url(@service), notice: 'Service was successfully created.' }
-        format.json { render :show, status: :created, location: @service }
+
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @service.errors, status: :unprocessable_entity }
+
       end
     end
-
   end
 
   def update
@@ -56,6 +56,6 @@ class ServicesController < ApplicationController
   private
 
   def service_params
-    params.require(:service).permit(:time, :location, :fee, :name, admin_user_ids:[])
+    params.require(:service).permit(:time, :location, :fee, :name)
   end
 end
