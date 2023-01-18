@@ -6,6 +6,6 @@ class AdminUser < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :lockable
 
-  has_many :seller_services
+  has_many :seller_services, dependent: :destroy
   has_many :services, through: :seller_services
 end
