@@ -1,9 +1,8 @@
 <p id="notice"><%= notice %></p>
-
-<p>
+ <p>
   <strong>Name:</strong>
   <%= @service.name %>
-</p>
+ </p>
 
 <p>
   <strong>Location:</strong>
@@ -25,4 +24,24 @@
   <%= @service.status %>
 </p>
 
-<%= link_to 'Back', services_path %>
+<p>
+  <strong>Availability:</strong>
+  <%= @service.availability %>
+</p>
+<% if current_admin_user.seller?%>
+  <% if @service.rejected?%>
+    <p>
+      <%= form_for @service do |t| %>
+              <%= t.hidden_field :status, :value=>'pending' %>
+              <%= t.submit "Send Reapproval Request" , class: 'btn btn-success text-white'  %>
+        <% end %>
+    </p>
+  <% end %>
+<% end%>
+
+
+<% if current_admin_user.seller?%>
+   <%= link_to 'Show Comments', service_comments_path(@service) , class: "btn btn-primary text-white" %>
+   <%= link_to 'Back', services_path , class: "btn btn-secondary text-white" %>
+
+<%end%>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_17_140909) do
+ActiveRecord::Schema.define(version: 2023_01_21_152200) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -25,9 +25,41 @@ ActiveRecord::Schema.define(version: 2023_01_17_140909) do
     t.string "unlock_token"
     t.string "name"
     t.integer "age"
+    t.integer "role", default: 0
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_admin_users_on_unlock_token", unique: true
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.integer "admin_user_id"
+    t.integer "service_id"
+    t.datetime "time"
+    t.string "address"
+    t.string "contact"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_bookings_on_admin_user_id"
+    t.index ["service_id"], name: "index_bookings_on_service_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commenter"
+    t.text "body"
+    t.integer "service_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_id"], name: "index_comments_on_service_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "rating"
+    t.string "reviewer"
+    t.text "body"
+    t.integer "service_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_id"], name: "index_reviews_on_service_id"
   end
 
   create_table "seller_services", force: :cascade do |t|
@@ -47,6 +79,7 @@ ActiveRecord::Schema.define(version: 2023_01_17_140909) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.integer "status", default: 0
+    t.integer "availability", default: 0
   end
 
 end

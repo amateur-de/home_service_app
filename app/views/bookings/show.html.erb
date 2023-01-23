@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+
+
+<p>
+  <strong>Time:</strong>
+  <%= @booking.time %>
+</p>
+
+<p>
+  <strong>Address</strong>
+  <%= @booking.address %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <%= @booking.contact %>
+</p>
+
+<%= link_to 'Back', availed_service_path(@service) ,class: "btn btn-secondary text-white"  %>

@@ -1,0 +1,48 @@
+<h1>Availed and Ongoing Services</h1>
+
+<table class="table table-bordered text-center">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Availability</th>
+      <th>Seller Name</th>
+      <th colspan='5'>Actions</th>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @services.each do |service| %>
+      <tr>
+        <td><%= service.name %></td>
+        <td><%= service.availability %></td>
+        <td><%= generate_name(service.admin_users.pluck(:name)) %></td>
+        <td><%= link_to 'Show', availed_service_path(service) %></td>
+        <% if service.ongoing? %>
+            <td><%= form_for service  do |t| %>
+            <%= t.hidden_field :availability, :value=>'availed' %>
+            <%= t.submit "Avail Service" , class: 'btn btn-success text-white'   %>
+            <% end %> </td>
+
+        <% end %>
+
+        <% if service.availed? %>
+          <% if service.review == nil %>
+       
+         
+             <td><%= link_to 'Add a Review', new_availed_service_review_path(service) %></td>
+          <% else %>
+             <td><%= link_to 'Show Review', availed_service_review_path(service,@review=service.review) %></td>
+             <td><%= link_to 'Edit Review', edit_availed_service_review_path(service,@review=service.review) %></td>
+             <td><%= link_to 'Destroy Review', [service,@review=service.review], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+          <% end %>
+        <% end %>
+       
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Available Services', available_services_path , class: "btn btn-primary text-white" %>

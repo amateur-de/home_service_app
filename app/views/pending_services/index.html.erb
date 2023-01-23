@@ -1,0 +1,32 @@
+<h1>Pending Services</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Seller Name</th>
+      <th colspan ='3'> Actions</th>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @services.each do |service| %>
+      <tr>
+        <td><%= service.name %></td>
+        <td><%= service.status %></td>
+        <td><%= generate_name(service.admin_users.pluck(:name)) %></td>
+        <td><%= link_to 'Show', service %></td>
+        <td><%= link_to 'Reject', new_service_comment_path(service) , class: 'btn btn-danger text-white'  %></td>
+        <td><%= form_for service do |t| %>
+            <%= t.hidden_field :status, :value=>'approved' %>
+            <%= t.submit "Approve Service" , class: 'btn btn-success text-white' %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'Approved Services', approved_services_path , class: "btn btn-success text-white" %>
+<%= link_to 'Rejected Services', rejected_services_path  , class: "btn btn-danger text-white" %>
