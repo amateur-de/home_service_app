@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+
+
+<p>
+  <strong>Reviewer:</strong>
+  <%= @review.reviewer %>
+</p>
+
+<p>
+  <strong>Rating</strong>
+  <%= @review.rating %>
+</p>
+
+<p>
+  <strong>Review</strong>
+  <%= @review.body %>
+</p>
+
+<%= link_to 'Back', availed_services_path , class: 'btn btn-secondary text-white' %>

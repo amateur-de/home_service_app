@@ -1,0 +1,10 @@
+<h2>Comments</h2>
+<% @comments.each do |comment| %>
+<div class = "border-top border-secondary">
+  <p>
+    <strong><%= comment.commenter %>:</strong>
+    <%= comment.body %>
+  </p>
+</div>
+
+<% end %>

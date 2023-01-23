@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @service.name %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @service.location %>
+</p>
+
+<p>
+  <strong>Fee:</strong>
+  <%= @service.fee %>
+</p>
+
+<p>
+  <strong>Time:</strong>
+  <%= @service.time %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @service.status %>
+</p>
+
+<p>
+  <strong>Availability:</strong>
+  <%= @service.availability %>
+</p>
+<% if @service.ongoing?%>
+  <td><%= link_to 'Edit Booking', edit_availed_service_booking_path(@service,@booking=@service.booking) , class: "btn btn-info text-white" %></td>
+  <td><%= link_to 'Show Booking', availed_service_booking_path(@service,@booking=@service.booking) , class: "btn btn-primary text-white"  %></td>
+  <td><%= link_to 'Destroy Booking', [@service,@booking=@service.booking], method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger text-white"  %></td>
+<% end %>
+
+<td><%= link_to 'Show Reviews', service_reviews_path(@service) , class: "btn btn-info text-white" %></td>
+
+<%= link_to 'Back', availed_services_path , class: "btn btn-secondary text-white" %>
