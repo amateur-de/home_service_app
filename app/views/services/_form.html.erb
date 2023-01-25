@@ -13,28 +13,28 @@
       </ul>
     </div>
   <% end %>
- <div class="field">
+ <div class="field" class="form-group">
     <%= form.label :name %>
-    <%= form.select :name , ['Cleaning' , 'Electrician' , 'Plumbing' , 'Paint'] %>
+    <%= form.select :name , ['Cleaning' , 'Electrician' , 'Plumbing' , 'Paint'] ,class: "form-control"  %>
   </div>
 
-  <div class="field">
+  <div class="field form-group" >
     <%= form.label :location %>
-    <%= form.text_field :location %>
+    <%= form.text_field :location , class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :fee %>
-    <%= form.number_field :fee %>
+    <%= form.number_field :fee , class: "form-control"  %>
   </div>
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :time %>
-    <%= form.datetime_local_field :time%>
+    <%= form.datetime_local_field :time , class: "form-control" %>
     
   </div>
   
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-success" %>
   </div>
 <% end %>

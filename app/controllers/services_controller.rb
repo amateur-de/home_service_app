@@ -27,11 +27,16 @@ class ServicesController < ApplicationController
     @service = Service.find(params[:id])
     respond_to do |format|
       if @service.update(service_params)
+        if request.referer == pending_services_url
+          format.html { redirect_to pending_services_url, notice: 'Service was successfully updated.' }
+        elsif request.referer == availed_services_url
+          format.html { redirect_to availed_services_url, notice: 'Service was successfully updated.' }
+        end
         format.html { redirect_to service_url(@service), notice: 'Service was successfully updated.' }
-        format.json { render :show, status: :ok, location: @service }
+
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @service.errors, status: :unprocessable_entity }
+
       end
     end
   end
@@ -53,9 +58,34 @@ class ServicesController < ApplicationController
     end
   end
 
+  def pending
+    @services = Service.pending
+    render 'pending_services/index'
+  end
+
+  def approved
+    @services = Service.approved
+    render 'approved_services/index'
+  end
+
+  def rejected
+    @services = Service.rejected
+    render 'rejected_services/index'
+  end
+
+  def available
+    @services = Service.approved.available
+    render 'available_services/index'
+  end
+
+  def availed
+    @services = current_admin_user.booked_services
+    render 'availed_services/index'
+  end
+
   private
 
   def service_params
-    params.require(:service).permit(:time, :location, :fee, :name)
+    params.require(:service).permit(:time, :location, :fee, :name, :status, :availability)
   end
 end

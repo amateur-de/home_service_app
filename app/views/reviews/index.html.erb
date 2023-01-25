@@ -1,0 +1,19 @@
+<h2>Reviews</h2>
+<% @reviews.each do |review| %>
+<div class = "border-top border-secondary">
+  <p>
+  <strong>Reviewer:</strong>
+  <%= review.reviewer %>
+</p>
+
+<p>
+  <strong>Rating</strong>
+  <%= review.rating %>
+</p>
+
+<p>
+  <strong>Review</strong>
+  <%= review.body %>
+</p>
+</div>
+<% end %>

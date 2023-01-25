@@ -1,9 +1,8 @@
 <p id="notice"><%= notice %></p>
-
-<p>
+ <p>
   <strong>Name:</strong>
   <%= @service.name %>
-</p>
+ </p>
 
 <p>
   <strong>Location:</strong>
@@ -25,4 +24,59 @@
   <%= @service.status %>
 </p>
 
-<%= link_to 'Back', services_path %>
+<p>
+  <strong>Availability:</strong>
+  <%= @service.availability %>
+</p>
+<% if current_admin_user.seller?%>
+  <% if @service.rejected?%>
+    <p>
+      <%= form_for @service do |t| %>
+              <%= t.hidden_field :status, :value=>'pending' %>
+              <%= t.submit "Send Reapproval Request" , class: 'btn btn-success text-white'  %>
+        <% end %>
+    </p>
+  <% end %>
+<% end%>
+
+<% if current_admin_user.customer?%>
+   
+      <% if @service.available?%>
+            <td><%= link_to 'Book', new_service_booking_path(@service) ,  class: "btn btn-success text-white" %></td>
+            <td><%= link_to 'Show Reviews', service_reviews_path(@service) , class: "btn btn-info text-white" %></td>
+            <td><%= link_to 'Back', available_services_path , class: "btn btn-secondary text-white" %></td>
+
+      <% elsif @service.ongoing?%>
+            <td><%= link_to 'Edit Booking', edit_service_booking_path(@service,@booking=@service.booking) , class: "btn btn-info text-white" %></td>
+            <td><%= link_to 'Show Booking', service_booking_path(@service,@booking=@service.booking) , class: "btn btn-primary text-white"  %></td>
+            <td><%= link_to 'Destroy Booking', [@service,@booking=@service.booking], method: :delete, data: { confirm: 'Are you sure?' } , class: "btn btn-danger text-white"  %></td>
+            <td><%= link_to 'Back', availed_services_path , class: "btn btn-secondary text-white" %></td>
+      <% elsif @service.availed?%>
+             <td><%= link_to 'Back', availed_services_path , class: "btn btn-secondary text-white" %></td>
+      
+  
+
+      <%end%>
+      
+  
+
+<%end%>
+
+
+<% if current_admin_user.seller?%>
+   <%= link_to 'Show Comments', service_comments_path(@service) , class: "btn btn-primary text-white" %>
+   <%= link_to 'Back', services_path , class: "btn btn-secondary text-white" %>
+
+<%end%>
+
+<% if current_admin_user.moderator?%>
+   <% if @service.rejected?%>
+        <%= link_to 'Show Comments', service_comments_path(@service) , class: "btn btn-primary text-white" %>
+        <%= link_to 'Back', rejected_services_path , class: "btn btn-secondary text-white" %>
+   <% elsif @service.pending?%>
+        <%= link_to 'Back', pending_services_path , class: "btn btn-secondary text-white" %>
+   <% elsif @service.approved?%>
+        <%= link_to 'Back', approved_services_path , class: "btn btn-secondary text-white" %>
+   <%end%>
+
+<%end%>

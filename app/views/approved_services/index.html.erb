@@ -1,0 +1,27 @@
+<h1>Approved Services</h1>
+
+<table class = "table table-bordered text-center">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Seller Name</th>
+      <th colspan ='1'>Action</th>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @services.each do |service| %>
+      <tr>
+        <td><%= service.name %></td>
+        <td><%= service.status %></td>
+        <td><%= generate_name(service.admin_users.pluck(:name)) %></td>
+        <td><%= link_to 'Show', service %></td>
+       
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'Pending Services', pending_services_path , class: "btn btn-primary text-white" %>
+<%= link_to 'Rejected Services', rejected_services_path ,class: "btn btn-danger text-white" %>

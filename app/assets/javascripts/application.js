@@ -14,3 +14,8 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+//= require plugins/jquery.easing.min
+//= require plugins/sb-admin-2.min
+//= require plugins/Chart.min
+//= require plugins/chart-area-demo
+//= require plugins/chart-pie-demo
