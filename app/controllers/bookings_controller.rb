@@ -2,7 +2,7 @@
 
 class BookingsController < ApplicationController
   def new
-    @service = Service.find(params[:available_service_id])
+    @service = Service.find(params[:service_id])
     @booking = @service.build_booking
   end
 
@@ -21,12 +21,12 @@ class BookingsController < ApplicationController
   end
 
   def edit
-    @service = Service.find(params[:availed_service_id])
+    @service = Service.find(params[:service_id])
     @booking = Booking.find(params[:id])
   end
 
   def show
-    @service = Service.find(params[:availed_service_id])
+    @service = Service.find(params[:service_id])
     @booking = Booking.find(params[:id])
   end
 

@@ -58,6 +58,31 @@ class ServicesController < ApplicationController
     end
   end
 
+  def pending
+    @services = Service.pending
+    render 'pending_services/index'
+  end
+
+  def approved
+    @services = Service.approved
+    render 'approved_services/index'
+  end
+
+  def rejected
+    @services = Service.rejected
+    render 'rejected_services/index'
+  end
+
+  def available
+    @services = Service.approved.available
+    render 'available_services/index'
+  end
+
+  def availed
+    @services = current_admin_user.booked_services
+    render 'availed_services/index'
+  end
+
   private
 
   def service_params

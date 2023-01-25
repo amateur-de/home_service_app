@@ -9,7 +9,7 @@ class ReviewsController < ApplicationController
   end
 
   def new
-    @service = Service.find(params[:availed_service_id])
+    @service = Service.find(params[:service_id])
     @review = @service.build_review
   end
 
