@@ -3,14 +3,17 @@
 class ServicesController < ApplicationController
   def new
     @service = current_admin_user.services.build
+    authorize @service
   end
 
   def index
     @services = current_admin_user.services
+    authorize @services
   end
 
   def create
     @service = current_admin_user.services.build(service_params)
+    authorize @service
     respond_to do |format|
       if @service.save
         current_admin_user.seller_services.create(service_id: @service.id)
@@ -25,6 +28,7 @@ class ServicesController < ApplicationController
 
   def update
     @service = Service.find(params[:id])
+    authorize @service
     respond_to do |format|
       if @service.update(service_params)
         if request.referer == pending_services_url
@@ -43,6 +47,7 @@ class ServicesController < ApplicationController
 
   def edit
     @service = Service.find(params[:id])
+    authorize @service
   end
 
   def show
@@ -51,6 +56,7 @@ class ServicesController < ApplicationController
 
   def destroy
     @service = Service.find(params[:id])
+    authorize @service
     @service.destroy
 
     respond_to do |format|
@@ -60,26 +66,31 @@ class ServicesController < ApplicationController
 
   def pending
     @services = Service.pending
+    authorize @services
     render 'pending_services/index'
   end
 
   def approved
     @services = Service.approved
+    authorize @services
     render 'approved_services/index'
   end
 
   def rejected
     @services = Service.rejected
+    authorize @services
     render 'rejected_services/index'
   end
 
   def available
     @services = Service.approved.available
+    authorize @services
     render 'available_services/index'
   end
 
   def availed
     @services = current_admin_user.booked_services
+    authorize @services
     render 'availed_services/index'
   end
 

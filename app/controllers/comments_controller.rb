@@ -4,16 +4,19 @@ class CommentsController < ApplicationController
   def index
     @service = Service.find(params[:service_id])
     @comments = @service.comments.all
+    authorize @comments
   end
 
   def new
     @service = Service.find(params[:service_id])
     @comment = @service.comments.build
+    authorize @comment
   end
 
   def create
     @service = Service.find(params[:service_id])
     @comment = @service.comments.build(comment_params)
+    authorize @comment
     respond_to do |format|
       if @comment.save
         @service.rejected!

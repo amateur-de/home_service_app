@@ -4,11 +4,13 @@ class BookingsController < ApplicationController
   def new
     @service = Service.find(params[:service_id])
     @booking = @service.build_booking
+    authorize @booking
   end
 
   def create
     @service = Service.find(params[:service_id])
     @booking = @service.build_booking(booking_params)
+    authorize @booking
     respond_to do |format|
       if @booking.save
         @service.ongoing!
@@ -23,16 +25,19 @@ class BookingsController < ApplicationController
   def edit
     @service = Service.find(params[:service_id])
     @booking = Booking.find(params[:id])
+    authorize @booking
   end
 
   def show
     @service = Service.find(params[:service_id])
     @booking = Booking.find(params[:id])
+    authorize @booking
   end
 
   def update
     @service = Service.find(params[:service_id])
     @booking = Booking.find(params[:id])
+    authorize @booking
     respond_to do |format|
       if @booking.update(booking_params)
         format.html { redirect_to availed_services_path, notice: 'Booking was successfully updated.' }
@@ -47,6 +52,7 @@ class BookingsController < ApplicationController
   def destroy
     @service = Service.find(params[:service_id])
     @booking = Booking.find(params[:id])
+    authorize @booking
     @booking.destroy
     @service.available!
     respond_to do |format|

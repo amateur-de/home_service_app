@@ -9,6 +9,7 @@ class Service < ApplicationRecord
   has_one :customer, through: :booking, source: :admin_user
   enum status: { pending: 0, approved: 1, rejected: 2 }
   enum availability: { available: 0, ongoing: 1, availed: 2 }
-  validates :location, :time, presence: true
+  validates :location, presence: true, length: { maximum: 20 }
   validates :fee, numericality: { greater_than: 0 }
+  validates :time, presence: true
 end

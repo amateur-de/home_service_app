@@ -30,5 +30,6 @@ Rails.application.routes.draw do
   # resources :approved_services, only: [:index]
   # resources :rejected_services, only: [:index]
   root 'welcome#index'
+  # match '*unmatched', to: 'application#routing_error', via: :all
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

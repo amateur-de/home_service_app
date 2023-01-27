@@ -28,6 +28,15 @@
   <strong>Availability:</strong>
   <%= @service.availability %>
 </p>
+<% if current_admin_user.seller? or current_admin_user.customer?%>
+        <%  @seller_rating = generate_seller_rating(@service.admin_users.pluck(:id)) %>
+        <% if @seller_rating != false %>
+             <strong>Average Seller Rating:</strong>
+              <%= @seller_rating.round(1) %>
+              
+
+        <% end %>
+<%end%>
 <% if current_admin_user.seller?%>
   <% if @service.rejected?%>
     <p>
@@ -38,6 +47,8 @@
     </p>
   <% end %>
 <% end%>
+<br>
+<br>
 
 <% if current_admin_user.customer?%>
    
@@ -61,6 +72,7 @@
   
 
 <%end%>
+
 
 
 <% if current_admin_user.seller?%>

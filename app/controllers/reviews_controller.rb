@@ -6,16 +6,19 @@ class ReviewsController < ApplicationController
     @services = Service.where(name: @service.name)
     @services = @services.pluck(:id)
     @reviews = Review.where(service_id: @services)
+    authorize @reviews
   end
 
   def new
     @service = Service.find(params[:service_id])
     @review = @service.build_review
+    authorize @review
   end
 
   def create
     @service = Service.find(params[:service_id])
     @review = @service.build_review(review_params)
+    authorize @review
     respond_to do |format|
       if @review.save
 
@@ -54,6 +57,7 @@ class ReviewsController < ApplicationController
   def destroy
     @service = Service.find(params[:service_id])
     @review = Review.find(params[:id])
+    authorize @review
     @review.destroy
     respond_to do |format|
       format.html { redirect_to availed_services_url, notice: 'Review was successfully destroyed.' }
