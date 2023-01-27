@@ -25,5 +25,8 @@
 </table>
 
 <br>
+<% if current_admin_user.avatar.attached?%>
+  <%= image_tag current_admin_user.avatar , width: '200px' %>
+<% end %>
 
 <%= link_to 'New Service', new_service_path ,class: "btn btn-primary text-white" %>
