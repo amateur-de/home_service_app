@@ -2,23 +2,20 @@
 
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
-  def after_sign_in_path_for(_resource)
-    if current_admin_user.seller?
-      services_path
-    elsif current_admin_user.customer?
-      available_services_path
-    elsif current_admin_user.moderator?
-      pending_services_path
-    end
-  end
+  # def after_sign_in_path_for(_resource)
+  # if current_admin_user.seller?
+  # services_path
+  # elsif current_admin_user.customer?
+  # available_services_path
+  # elsif current_admin_user.moderator?
+  # pending_services_path
+  # end
+  # end
 
   def pundit_user
     AdminUser.find(current_admin_user.id)
   end
 
-  def routing_error(_error = 'Routing error', _status = :not_found, exception = nil)
-    render_exception(404, 'Routing Error', exception)
-  end
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -45,7 +42,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name age role avatar])
-    devise_parameter_sanitizer.permit(:account_update, keys: %i[name age role avatar])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name age role avatar gender])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[name age role avatar gender])
   end
 end

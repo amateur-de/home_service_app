@@ -1,4 +1,12 @@
 <h1>Services</h1>
+<% if current_admin_user.experience == nil%>
+    <p>Experience has been created</p>
+    <% current_admin_user.create_experience%>
+<%end%>
+<p>
+<strong> Experience:</strong>
+<%= current_admin_user.experience.level%>
+</p>
 
 <table class="table table-bordered text-center">
   <thead>
@@ -24,9 +32,9 @@
   </tbody>
 </table>
 
+
 <br>
-<% if current_admin_user.avatar.attached?%>
-  <%= image_tag current_admin_user.avatar , width: '200px' %>
-<% end %>
+
 
 <%= link_to 'New Service', new_service_path ,class: "btn btn-primary text-white" %>
+<%= link_to 'Home Page', welcome_index_path ,class: "btn btn-warning text-white" %>

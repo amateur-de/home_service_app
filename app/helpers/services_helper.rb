@@ -18,4 +18,13 @@ module ServicesHelper
       rating_sum / rating_i.to_f
     end
   end
+
+  def generate_seller_experience(identifier)
+    if identifier.size != 1
+      name_string = 'Wrong way'
+      return name_string
+    end
+    user = AdminUser.find(identifier[0])
+    user.experience.level
+  end
 end

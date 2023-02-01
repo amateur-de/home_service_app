@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_26_141551) do
+ActiveRecord::Schema.define(version: 2023_01_30_100445) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2023_01_26_141551) do
     t.string "name"
     t.integer "age"
     t.integer "role", default: 0
+    t.string "gender", default: "Male"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_admin_users_on_unlock_token", unique: true
@@ -71,6 +72,14 @@ ActiveRecord::Schema.define(version: 2023_01_26_141551) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["service_id"], name: "index_comments_on_service_id"
+  end
+
+  create_table "experiences", force: :cascade do |t|
+    t.string "level", default: "Novice"
+    t.integer "admin_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_experiences_on_admin_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -101,6 +110,7 @@ ActiveRecord::Schema.define(version: 2023_01_26_141551) do
     t.string "name"
     t.integer "status", default: 0
     t.integer "availability", default: 0
+    t.datetime "start"
   end
 
 end

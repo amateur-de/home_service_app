@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+
  <p>
   <strong>Name:</strong>
   <%= @service.name %>
@@ -15,7 +15,12 @@
 </p>
 
 <p>
-  <strong>Time:</strong>
+  <strong>Starting Time:</strong>
+  <%= @service.start %>
+</p>
+
+<p>
+  <strong>Ending Time:</strong>
   <%= @service.time %>
 </p>
 
@@ -36,6 +41,12 @@
               
 
         <% end %>
+        <%  @seller_experience = generate_seller_experience(@service.admin_users.pluck(:id)) %>
+        
+        <p>
+            <strong> Seller Experience:</strong>
+            <%= @seller_experience %>
+        </p>
 <%end%>
 <% if current_admin_user.seller?%>
   <% if @service.rejected?%>
@@ -45,6 +56,16 @@
               <%= t.submit "Send Reapproval Request" , class: 'btn btn-success text-white'  %>
         <% end %>
     </p>
+  <% elsif @service.ongoing? %>
+    <p>
+      <%= form_for @service , :remote => true  do |t| %>
+            <%= t.hidden_field :availability, :value=>'availed' %>
+            <%= t.submit "Avail Service" , class: 'btn btn-success text-white'   %>
+      <% end %> </td>
+   </p>
+
+        
+
   <% end %>
 <% end%>
 <br>

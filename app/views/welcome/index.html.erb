@@ -1,4 +1,29 @@
-<h1>Home Service Application</h1>
 
-<%= link_to "Signin",new_admin_user_session_path%>
+
+<% if admin_user_signed_in? %>
+    <h1>Hello <%= current_admin_user.name %> </h1>
+    <% if current_admin_user.avatar.attached?%>
+        <%= image_tag current_admin_user.avatar , width: '200px' %>
+   <% end %>
+   <br>
+   <br>
+    <% if current_admin_user.seller?%>
+         <%= link_to 'Services', services_path , class: "btn btn-success text-white" %>
+    <% elsif current_admin_user.customer?%>
+         <%= link_to 'Available Services', available_services_path , class: "btn btn-primary text-white" %>
+         <%= link_to 'Availed Services', availed_services_path , class: "btn btn-success text-white" %>
+    <% elsif current_admin_user.moderator?%>
+        <%= link_to 'Approved Services', approved_services_path , class: "btn btn-success text-white" %>
+        <%= link_to 'Rejected Services', rejected_services_path  , class: "btn btn-danger text-white" %>
+        <%= link_to 'Pending Services', pending_services_path ,class: "btn btn-primary text-white" %>
+    <% end%>
+         
+
+
+<% else%>
+
+   <h1>Home Service Application</h1>
+
+   <%= link_to "Signin",new_admin_user_session_path%>
+<% end%>
 

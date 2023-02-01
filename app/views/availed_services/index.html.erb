@@ -18,14 +18,7 @@
         <td><%= service.availability %></td>
         <td><%= generate_name(service.admin_users.pluck(:name)) %></td>
         <td><%= link_to 'Show', service_path(service) %></td>
-        <% if service.ongoing? %>
-            <td><%= form_for service  do |t| %>
-            <%= t.hidden_field :availability, :value=>'availed' %>
-            <%= t.submit "Avail Service" , class: 'btn btn-success text-white'   %>
-            <% end %> </td>
-
-        <% end %>
-
+      
         <% if service.availed? %>
           <% if service.review == nil %>
        
@@ -45,3 +38,4 @@
 </table>
 
 <%= link_to 'Available Services', available_services_path , class: "btn btn-primary text-white" %>
+<%= link_to 'Home Page', welcome_index_path ,class: "btn btn-warning text-white" %>

@@ -1,6 +1,6 @@
 
 
-<%= form_with(model: [ @service, @comment=@service.comments.build ], local: true) do |form| %>
+<%= form_with(model: [ @service, @comment=@service.comments.build ]) do |form| %>
     <% if @comment.errors.any? %>
     <div id="error_explanation">
       <h2>
@@ -16,7 +16,6 @@
   <% end %>
   
   <div class = "form-group">
-    <%= form.label :body %><br>
     <%= form.text_area :body %>
   </div>
   <p>

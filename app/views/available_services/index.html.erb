@@ -23,7 +23,9 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @services %>
 
 <br>
 
 <%= link_to 'Availed Services', availed_services_path ,  class: "btn btn-success text-white"%>
+<%= link_to 'Home Page', welcome_index_path ,class: "btn btn-warning text-white" %>

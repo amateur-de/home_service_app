@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dfree</title>
+    <title>Home Service App</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,8 +12,8 @@
 
   <body>
     <% if admin_user_signed_in? %>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Home Service Application</a>
+      <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+      <span class="navbar-brand text-white" >Home Service Application</span>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -21,16 +21,24 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-             <%= link_to "Signout",destroy_admin_user_session_path,  method: :delete,  class: 'nav-link'%>
+             <%= link_to "Signout",destroy_admin_user_session_path,  method: :delete,  class: 'nav-link text-white'%>
           </li>
           <li class="nav-item">
-             <%= link_to "Edit Account",edit_admin_user_registration_path,  class: 'nav-link' %>
+             <%= link_to "Edit Account",edit_admin_user_registration_path,  class: 'nav-link text-white' %>
           </li>  
       </div>
     </nav>
   <% end %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice %>
+      <div class="notice " >
+        <h6 class="bg-success text-start text-white p-2"><%= notice %></h6>
+      </div>
+    <%end%>
+    <% if alert %>
+      <div class="alert ">
+        <h6 class="bg-danger text-start text-white  p-2"><%= alert %></h6>
+      </div>
+    <% end %>
     <div class="container">
           <%= yield %>
           

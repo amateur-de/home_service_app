@@ -1,6 +1,6 @@
 <h1>Edit Booking</h1>
 
-<%= form_with(model: [ @service, @booking] , local: true) do |form| %>
+<%= form_with(model: [ @service, @booking]) do |form| %>
   <div class = "form-group">
     <%= form.label :address %><br>
     <%= form.text_field :address , class: "form-control" %>

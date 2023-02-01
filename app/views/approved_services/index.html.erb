@@ -6,7 +6,7 @@
       <th>Name</th>
       <th>Status</th>
       <th>Seller Name</th>
-      <th colspan ='1'>Action</th>
+      <th colspan ='2'>Action</th>
       
     </tr>
   </thead>
@@ -18,6 +18,7 @@
         <td><%= service.status %></td>
         <td><%= generate_name(service.admin_users.pluck(:name)) %></td>
         <td><%= link_to 'Show', service %></td>
+        <td><%= link_to 'Reject', new_service_comment_path(service) , class: 'btn btn-danger text-white'  %></td>
        
       </tr>
     <% end %>
@@ -25,3 +26,4 @@
 </table>
 <%= link_to 'Pending Services', pending_services_path , class: "btn btn-primary text-white" %>
 <%= link_to 'Rejected Services', rejected_services_path ,class: "btn btn-danger text-white" %>
+<%= link_to 'Home Page', welcome_index_path ,class: "btn btn-warning text-white" %>

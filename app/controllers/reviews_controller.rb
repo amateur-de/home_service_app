@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
     @service = Service.find(params[:service_id])
     @services = Service.where(name: @service.name)
     @services = @services.pluck(:id)
-    @reviews = Review.where(service_id: @services)
+    @reviews = Review.where(service_id: @services).order(created_at: :desc)
     authorize @reviews
   end
 

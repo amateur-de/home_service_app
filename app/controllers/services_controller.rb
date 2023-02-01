@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class ServicesController < ApplicationController
+  before_action :set_service, only: %i[update]
   def new
     @service = current_admin_user.services.build
     authorize @service
   end
 
   def index
-    @services = current_admin_user.services
+    @services = current_admin_user.services.order(created_at: :desc)
     authorize @services
   end
 
@@ -27,17 +28,15 @@ class ServicesController < ApplicationController
   end
 
   def update
-    @service = Service.find(params[:id])
     authorize @service
     respond_to do |format|
       if @service.update(service_params)
-        if request.referer == pending_services_url
-          format.html { redirect_to pending_services_url, notice: 'Service was successfully updated.' }
-        elsif request.referer == availed_services_url
-          format.html { redirect_to availed_services_url, notice: 'Service was successfully updated.' }
+        url = update_url(request.referer)
+        if url != false
+          format.html { redirect_to url, notice: 'Service was successfully updated.' }
+        else
+          format.html { redirect_to service_url(@service), notice: 'Service was successfully updated.' }
         end
-        format.html { redirect_to service_url(@service), notice: 'Service was successfully updated.' }
-
       else
         format.html { render :edit, status: :unprocessable_entity }
 
@@ -83,7 +82,7 @@ class ServicesController < ApplicationController
   end
 
   def available
-    @services = Service.approved.available
+    @services = Service.approved.available.order(created_at: :desc).page(params[:page])
     authorize @services
     render 'available_services/index'
   end
@@ -96,7 +95,23 @@ class ServicesController < ApplicationController
 
   private
 
+  def set_service
+    @service = Service.find(params[:id])
+  end
+
   def service_params
-    params.require(:service).permit(:time, :location, :fee, :name, :status, :availability)
+    params.require(:service).permit(:time, :location, :fee, :name, :status, :availability, :start)
+  end
+
+  def update_url(url)
+    if url == pending_services_url
+      url
+    elsif url == availed_services_url
+      url
+    elsif url == approved_services_url
+      url
+    else
+      false
+    end
   end
 end
