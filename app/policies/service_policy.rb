@@ -20,6 +20,10 @@ class ServicePolicy < ApplicationPolicy
     @user.seller?
   end
 
+  def show?
+    @user.seller? or @user.moderator? or @user.customer?
+  end
+
   def edit?
     @user.seller? or @user.moderator? or @user.customer?
   end

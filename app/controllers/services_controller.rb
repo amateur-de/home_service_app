@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ServicesController < ApplicationController
-  before_action :set_service, only: %i[update]
+  before_action :set_service, only: %i[update show edit destroy]
   def new
     @service = current_admin_user.services.build
     authorize @service
@@ -45,16 +45,14 @@ class ServicesController < ApplicationController
   end
 
   def edit
-    @service = Service.find(params[:id])
     authorize @service
   end
 
   def show
-    @service = Service.find(params[:id])
+    authorize @service
   end
 
   def destroy
-    @service = Service.find(params[:id])
     authorize @service
     @service.destroy
 
@@ -94,10 +92,6 @@ class ServicesController < ApplicationController
   end
 
   private
-
-  def set_service
-    @service = Service.find(params[:id])
-  end
 
   def service_params
     params.require(:service).permit(:time, :location, :fee, :name, :status, :availability, :start)

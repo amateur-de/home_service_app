@@ -2,15 +2,6 @@
 
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
-  # def after_sign_in_path_for(_resource)
-  # if current_admin_user.seller?
-  # services_path
-  # elsif current_admin_user.customer?
-  # available_services_path
-  # elsif current_admin_user.moderator?
-  # pending_services_path
-  # end
-  # end
 
   def pundit_user
     AdminUser.find(current_admin_user.id)
@@ -37,6 +28,14 @@ class ApplicationController < ActionController::Base
   def error_occurred(_exception)
     flash[:alert] = 'Something went wrong!'
     redirect_back(fallback_location: root_path)
+  end
+
+  def set_service
+    @service = Service.find(params[:id])
+  end
+
+  def set_resource_service
+    @service = Service.find(params[:service_id])
   end
 
   protected

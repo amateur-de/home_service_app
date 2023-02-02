@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class BookingsController < ApplicationController
+  before_action :set_resource_service
   def new
-    @service = Service.find(params[:service_id])
     @booking = @service.build_booking
     authorize @booking
   end
 
   def create
-    @service = Service.find(params[:service_id])
     @booking = @service.build_booking(booking_params)
     authorize @booking
     respond_to do |format|
@@ -23,19 +22,16 @@ class BookingsController < ApplicationController
   end
 
   def edit
-    @service = Service.find(params[:service_id])
     @booking = Booking.find(params[:id])
     authorize @booking
   end
 
   def show
-    @service = Service.find(params[:service_id])
     @booking = Booking.find(params[:id])
     authorize @booking
   end
 
   def update
-    @service = Service.find(params[:service_id])
     @booking = Booking.find(params[:id])
     authorize @booking
     respond_to do |format|
@@ -50,7 +46,6 @@ class BookingsController < ApplicationController
   end
 
   def destroy
-    @service = Service.find(params[:service_id])
     @booking = Booking.find(params[:id])
     authorize @booking
     @booking.destroy
