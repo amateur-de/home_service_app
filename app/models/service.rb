@@ -11,7 +11,7 @@ class Service < ApplicationRecord
   enum status: { pending: 0, approved: 1, rejected: 2 }
   enum availability: { available: 0, ongoing: 1, availed: 2 }
   validates :location, presence: true, length: { maximum: 50 }
-  validates :fee, numericality: { greater_than: 0 }
+  validates :fee, numericality: { greater_than: 0, less_than_or_equal_to: 100_000 }
   validates :time, :start, presence: true
   validate :service_time_validation
 end
